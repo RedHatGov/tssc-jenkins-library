@@ -358,7 +358,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step tag-source
                                 """
                             } // container
