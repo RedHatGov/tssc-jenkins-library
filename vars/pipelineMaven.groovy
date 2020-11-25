@@ -345,7 +345,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step generate-metadata
                                 """
                             } // container
@@ -370,7 +369,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step unit-test
                                 """
                             } // container
@@ -383,7 +381,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step package
                                 """
                             } // container
@@ -396,7 +393,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step static-code-analysis
                                 """
                             } // container
@@ -409,7 +405,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step push-artifacts
                                 """
                             } // container
@@ -422,7 +417,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step create-container-image
                                 """
                             } // container
@@ -442,7 +436,6 @@ def call(Map inputMap) {
                                             source tssc/bin/activate
                                             python -m tssc \
                                                 --config /opt/platform-config \
-                                                --config ${input.configDir} \
                                                 --step container-image-static-compliance-scan
                                         """
                                     } //container
@@ -455,7 +448,6 @@ def call(Map inputMap) {
                                             source tssc/bin/activate
                                             python -m tssc \
                                                 --config /opt/platform-config \
-                                                --config ${input.configDir} \
                                                 --step container-image-static-vulnerability-scan
                                         """
                                     } //container
@@ -470,7 +462,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step push-container-image
                                 """
                             } // container
@@ -483,7 +474,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step sign-container-image
                                 """
                             } // container
@@ -515,7 +505,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step deploy \
                                         --environment ${input.envNameDev}
                                 """
@@ -529,7 +518,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step validate-environment-configuration \
                                         --environment ${input.envNameDev}
                                 """
@@ -545,7 +533,6 @@ def call(Map inputMap) {
                                             source tssc/bin/activate
                                             python -m tssc \
                                                 --config /opt/platform-config \
-                                                --config ${input.configDir} \
                                                 --step uat \
                                                 --environment ${input.envNameDev}
                                         """
@@ -590,7 +577,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step deploy \
                                         --environment ${input.envNameTest}
                                     """
@@ -604,7 +590,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step validate-environment-configuration \
                                         --environment ${input.envNameTest}
                                 """
@@ -620,7 +605,6 @@ def call(Map inputMap) {
                                             source tssc/bin/activate
                                             python -m tssc \
                                                 --config /opt/platform-config \
-                                                --config ${input.configDir} \
                                                 --step uat \
                                                 --environment ${input.envNameTest}
                                         """
@@ -665,7 +649,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step deploy \
                                         --environment ${input.envNameProd}
                                 """
@@ -679,7 +662,6 @@ def call(Map inputMap) {
                                     source tssc/bin/activate
                                     python -m tssc \
                                         --config /opt/platform-config \
-                                        --config ${input.configDir} \
                                         --step validate-environment-configuration \
                                         --environment ${input.envNameProd}
                                 """
