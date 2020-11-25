@@ -97,7 +97,7 @@ class PipelineInput implements Serializable {
      * [SOPS](https://github.com/mozilla/sops) encrypted configuration in the given `configDir`.
      *
      * @SEE https://www.jenkins.io/doc/book/using/using-credentials/#configuring-credentials */
-    String credentialIDsopsPGPKey = 'sops-pgp-key'
+    // String credentialIDsopsPGPKey = 'sops-pgp-key'
 
     /* Kubernetes ServiceAccount that the Jenkins Worker Kubernetes Pod should be deployed with.
      *
@@ -333,15 +333,6 @@ def call(Map inputMap) {
                                 ${TSSC_LIB_INSTALL_CMD}
                             """
                         }
-                    }
-
-                    withCredentials([
-                        file(credentialsId: input.credentialIDsopsPGPKey, variable: 'sops_pgp_key')
-                    ]) {
-                        sh """
-                            echo "Import PGP Key"
-                            gpg --import ${sops_pgp_key}
-                        """
                     }
                 } // steps
             } // stage
