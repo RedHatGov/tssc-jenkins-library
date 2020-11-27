@@ -467,18 +467,18 @@ def call(Map inputMap) {
                             } // container
                         } // steps
                     } // stage
-                    stage('Sign Trusted Container Image') {
-                        steps {
-                            container('containers') {
-                                sh """
-                                    source tssc/bin/activate
-                                    python -m tssc \
-                                        --config /opt/platform-config \
-                                        --step sign-container-image
-                                """
-                            } // container
-                        } // steps
-                    } // stage
+                    // stage('Sign Trusted Container Image') {
+                    //     steps {
+                    //         container('containers') {
+                    //             sh """
+                    //                 source tssc/bin/activate
+                    //                 python -m tssc \
+                    //                     --config /opt/platform-config \
+                    //                     --step sign-container-image
+                    //             """
+                    //         } // container
+                    //     } // steps
+                    // } // stage
                 } // CI Stage
             } // CI Stages
 
