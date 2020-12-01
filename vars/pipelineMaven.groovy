@@ -5,6 +5,10 @@ class PipelineInput implements Serializable {
      * `--config` flag. */
     String   configDir   = ''
 
+    /* Path to pass to the [TSSC library](https://rhtconsulting.github.io/tssc-python-package/)
+     * `--config` flag containing platform level configuration. */
+    String   platformConfigDir = '/opt/platform-config'
+
     /* Name of the "Development" environment used in the configuration files and to pass to the
      * [TSSC library](https://rhtconsulting.github.io/tssc-python-package/) `--environment` flag
      * where appropriate. */
@@ -213,10 +217,10 @@ def call(Map inputMap) {
           volumeMounts:
           - mountPath: /home/tssc
             name: home-tssc
-          - mountPath: /opt/platform-config/tssc-config.yml
+          - mountPath: ${platformConfigDir}/tssc-config.yml
             name: tssc-config
             subPath: tssc-config.yml
-          - mountPath: /opt/platform-config/tssc-config-secrets.yml
+          - mountPath: ${platformConfigDir}/tssc-config-secrets.yml
             name: tssc-config-secrets
             subPath: tssc-config-secrets.yml
         - name: 'maven'
@@ -227,10 +231,10 @@ def call(Map inputMap) {
           volumeMounts:
           - mountPath: /home/tssc
             name: home-tssc
-          - mountPath: /opt/platform-config/tssc-config.yml
+          - mountPath: ${platformConfigDir}/tssc-config.yml
             name: tssc-config
             subPath: tssc-config.yml
-          - mountPath: /opt/platform-config/tssc-config-secrets.yml
+          - mountPath: ${platformConfigDir}/tssc-config-secrets.yml
             name: tssc-config-secrets
             subPath: tssc-config-secrets.yml
         - name: 'containers'
@@ -241,10 +245,10 @@ def call(Map inputMap) {
           volumeMounts:
           - mountPath: /home/tssc
             name: home-tssc
-          - mountPath: /opt/platform-config/tssc-config.yml
+          - mountPath: ${platformConfigDir}/tssc-config.yml
             name: tssc-config
             subPath: tssc-config.yml
-          - mountPath: /opt/platform-config/tssc-config-secrets.yml
+          - mountPath: ${platformConfigDir}/tssc-config-secrets.yml
             name: tssc-config-secrets
             subPath: tssc-config-secrets.yml
         - name: 'argocd'
@@ -255,10 +259,10 @@ def call(Map inputMap) {
           volumeMounts:
           - mountPath: /home/tssc
             name: home-tssc
-          - mountPath: /opt/platform-config/tssc-config.yml
+          - mountPath: ${platformConfigDir}/tssc-config.yml
             name: tssc-config
             subPath: tssc-config.yml
-          - mountPath: /opt/platform-config/tssc-config-secrets.yml
+          - mountPath: ${platformConfigDir}/tssc-config-secrets.yml
             name: tssc-config-secrets
             subPath: tssc-config-secrets.yml
         - name: 'sonar'
@@ -269,10 +273,10 @@ def call(Map inputMap) {
           volumeMounts:
           - mountPath: /home/tssc
             name: home-tssc
-          - mountPath: /opt/platform-config/tssc-config.yml
+          - mountPath: ${platformConfigDir}/tssc-config.yml
             name: tssc-config
             subPath: tssc-config.yml
-          - mountPath: /opt/platform-config/tssc-config-secrets.yml
+          - mountPath: ${platformConfigDir}/tssc-config-secrets.yml
             name: tssc-config-secrets
             subPath: tssc-config-secrets.yml
         - name: 'config-lint'
@@ -283,10 +287,10 @@ def call(Map inputMap) {
           volumeMounts:
           - mountPath: /home/tssc
             name: home-tssc
-          - mountPath: /opt/platform-config/tssc-config.yml
+          - mountPath: ${platformConfigDir}/tssc-config.yml
             name: tssc-config
             subPath: tssc-config.yml
-          - mountPath: /opt/platform-config/tssc-config-secrets.yml
+          - mountPath: ${platformConfigDir}/tssc-config-secrets.yml
             name: tssc-config-secrets
             subPath: tssc-config-secrets.yml
         - name: 'openscap'
@@ -297,10 +301,10 @@ def call(Map inputMap) {
           volumeMounts:
           - mountPath: /home/tssc
             name: home-tssc
-          - mountPath: /opt/platform-config/tssc-config.yml
+          - mountPath: ${platformConfigDir}/tssc-config.yml
             name: tssc-config
             subPath: tssc-config.yml
-          - mountPath: /opt/platform-config/tssc-config-secrets.yml
+          - mountPath: ${platformConfigDir}/tssc-config-secrets.yml
             name: tssc-config-secrets
             subPath: tssc-config-secrets.yml
         volumes:
@@ -344,7 +348,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step generate-metadata
                                 """
                             } // container
@@ -356,7 +360,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step tag-source
                                 """
                             } // container
@@ -368,7 +372,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step unit-test
                                 """
                             } // container
@@ -380,7 +384,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step package
                                 """
                             } // container
@@ -392,7 +396,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step static-code-analysis
                                 """
                             } // container
@@ -404,7 +408,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step push-artifacts
                                 """
                             } // container
@@ -416,7 +420,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step create-container-image
                                 """
                             } // container
@@ -435,7 +439,7 @@ def call(Map inputMap) {
                                         sh """
                                             source tssc/bin/activate
                                             python -m tssc \
-                                                --config /opt/platform-config \
+                                                --config ${platformConfigDir} ${configDir} \
                                                 --step container-image-static-compliance-scan
                                         """
                                     } //container
@@ -447,7 +451,7 @@ def call(Map inputMap) {
                                         sh """
                                             source tssc/bin/activate
                                             python -m tssc \
-                                                --config /opt/platform-config \
+                                                --config ${platformConfigDir} ${configDir} \
                                                 --step container-image-static-vulnerability-scan
                                         """
                                     } //container
@@ -461,7 +465,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step push-container-image
                                 """
                             } // container
@@ -473,7 +477,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step sign-container-image
                                 """
                             } // container
@@ -504,7 +508,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step deploy \
                                         --environment ${input.envNameDev}
                                 """
@@ -517,7 +521,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step validate-environment-configuration \
                                         --environment ${input.envNameDev}
                                 """
@@ -532,7 +536,7 @@ def call(Map inputMap) {
                                         sh """
                                             source tssc/bin/activate
                                             python -m tssc \
-                                                --config /opt/platform-config \
+                                                --config ${platformConfigDir} ${configDir} \
                                                 --step uat \
                                                 --environment ${input.envNameDev}
                                         """
@@ -576,7 +580,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step deploy \
                                         --environment ${input.envNameTest}
                                     """
@@ -589,7 +593,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step validate-environment-configuration \
                                         --environment ${input.envNameTest}
                                 """
@@ -604,7 +608,7 @@ def call(Map inputMap) {
                                         sh """
                                             source tssc/bin/activate
                                             python -m tssc \
-                                                --config /opt/platform-config \
+                                                --config ${platformConfigDir} ${configDir} \
                                                 --step uat \
                                                 --environment ${input.envNameTest}
                                         """
@@ -648,7 +652,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step deploy \
                                         --environment ${input.envNameProd}
                                 """
@@ -661,7 +665,7 @@ def call(Map inputMap) {
                                 sh """
                                     source tssc/bin/activate
                                     python -m tssc \
-                                        --config /opt/platform-config \
+                                        --config ${platformConfigDir} ${configDir} \
                                         --step validate-environment-configuration \
                                         --environment ${input.envNameProd}
                                 """
