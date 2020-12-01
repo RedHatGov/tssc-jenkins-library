@@ -5,10 +5,6 @@ class PipelineInput implements Serializable {
      * `--config` flag. */
     String   configDir   = ''
 
-    /* Path to pass to the [TSSC library](https://rhtconsulting.github.io/tssc-python-package/)
-     * `--config` flag containing platform level configuration. */
-    String   platformConfigDir = '/opt/platform-config'
-
     /* Name of the "Development" environment used in the configuration files and to pass to the
      * [TSSC library](https://rhtconsulting.github.io/tssc-python-package/) `--environment` flag
      * where appropriate. */
@@ -142,6 +138,9 @@ class PipelineInput implements Serializable {
 
 // Java Backend Reference Jenkinsfile
 def call(Map inputMap) {
+    /* Platform level config path */
+    String   platformConfigDir = '/opt/platform-config'
+
     /* Match everything that isn't a-z, a-Z, 0-9, -, _, or .
     *
     * See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set
